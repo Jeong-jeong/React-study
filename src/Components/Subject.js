@@ -1,10 +1,12 @@
 import { Component } from 'react';
 
 class Subject extends Component {
-	render() { // z
+	render() {
+    console.log('Subject render');
+		
 	  return (
 		<header>
-		  <h1>{this.props.title}</h1> {/* props = 속성 */}
+		  <h1><a href=''>{this.props.title}</a></h1> {/* props = 속성 */}
 		  {this.props.sub}
 		</header>
 	  );
