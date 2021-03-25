@@ -9,7 +9,17 @@ class Toc extends Component {
 		let data = this.props.data;
 		let i = 0;
 		while (i < data.length) {
-			lists.push(<li key={data[i].id}><a href={'/content/' + data[i].id}>{data[i].title}</a></li>);
+			lists.push(
+			<li key={data[i].id}>
+				<a 
+				href={'/content/' + data[i].id}
+				data-id = {data[i].id}
+				onClick = { function (e) { // 여기서 onClick 이벤트를 실행시키고
+					e.preventDefault();
+					this.props.onChangePage(e.target.dataset.id); // Toc 컴포넌트안의 onChangePage 함수를 호출하도록 함.
+				}.bind(this) }
+				>{data[i].title}</a>
+			</li>);
 			i++;
 		}
 	  return (

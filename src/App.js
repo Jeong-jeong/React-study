@@ -11,6 +11,7 @@ class App extends Component { // React의 Component를 상속받아 App 클래�
     super(props); // state 값 초기화
     this.state = { 
       mode: 'read', // 'welcome' 모드일 때
+      selected_content_id: 1,
       subject: {title: 'WEB', sub: 'world wide web!'},
       welcome: {title: 'Welcome', desc: 'Hello, React!'}, // welcome 모드일 때 갖는 값
       contents: [
@@ -27,29 +28,34 @@ class App extends Component { // React의 Component를 상속받아 App 클래�
       _title = this.state.welcome.title;
       _desc = this.state.welcome.desc;
     } else if (this.state.mode === 'read') {
-      _title = this.state.contents[0].title;
-      _desc = this.state.contents[0].desc;
+      this.state.contents.forEach ( (item) => {
+        if (item.id === this.state.selected_content_id) {
+          _title = item.title;
+          _desc = item.desc;
+        }
+      } )
+      
     }
     console.log('render', this); // App 컴포넌트 > render () 안에서 this = App 
     return (
       <>
       <div className='App'>
-        {/* <Subject title={this.state.subject.title} 
-                  sub={this.state.subject.sub}>
-        </Subject> */}
-        <header>
-		      <h1><a href='' onClick = {function(e) {
-            console.log('event in', this);
-            e.preventDefault();
-            // this.state.mode = 'welcome'; > state 값 직접 변경❌
-            this.setState({ // setState()에서 변경하고 싶은 값을 객체 형태로 줘야 함.
-              mode: 'welcome'
-            })
- 
-          }.bind(this)}>{this.state.subject.title}</a></h1>
-		        {this.state.subject.sub}
-		    </header>
-        <Toc data={this.state.contents}></Toc>
+        <Subject title={this.state.subject.title} 
+                  sub={this.state.subject.sub}
+                  onChangePage = {function () {
+                    this.setState({mode: 'welcome'});
+                  }.bind(this)}
+        >
+                  
+        </Subject>
+        <Toc onChangePage = { function(id) {
+          this.setState({
+            mode: 'read',
+            selected_content_id: +id
+          });
+        }.bind(this)} 
+        data={this.state.contents}
+        ></Toc>
         <Content title={_title} desc={_desc}></Content>
       </div>
       </>
