@@ -5,4 +5,11 @@
 
 .App {
   text-align: center;
+  border: 3px solid darkgoldenrod;
+}
+
+.container {
+  border: 5px solid #eee;
+  margin: 5px;
+  padding: 5px;
 }
