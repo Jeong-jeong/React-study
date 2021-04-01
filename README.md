@@ -96,6 +96,33 @@
 + 구조 분해 할당을 사용해 함수에서 state 사용을 더 깔끔하게 할 수 있음.
 
 
+### `6일차`
+라이프 사이클<br>
+
++ ✔️ 클래스에서 라이프 사이클 구현하기
++ componentWillMount() => render 되기 전 실행 (첫 render 시)
++ componentDidMount() => render된 후 실행 (첫 render 시 )
++ shouldComponentUpdate() => state값이 바뀔 때 render를 호출할 필요가 있냐 없냐를 true로 리턴하면 render 호출 false면 호출 안함.
++ componentWillUpdate() => shouldComponentUpdate return 값이 true일 때 실행. (state 값이 바뀔 때마다)
++ componentDidUpdate() => render후 실행 (state 값이 바뀔 때마다)
++ componentWillUnMount() => 뒤처리 할 때, 컴포넌트가 사라질 때
+
++ ✔️ 함수에서 라이프 사이클 구현하기
++ **useEffect()** => render가 끝난 후 실행, 렌더가 실행될 때마다 같이 실행됨
+  + class에서의 componentDidMount & componentDidUpdate와 동일
+  + side effect가 생략된 말
+  + 리액트의 main effect는 render, 즉 화면에 그리는 것.
+  + useEffect는 렌더가 끝나고 난후, 렌더가 실행될 때마다 실행되는 사이드 이펙트 효과.
+  + 여러 개 사용 가능
++ **effect with clean up**
+  + render가 된 직후, render가 다시 호출될 때 기존 useEffect보다 먼저 실행하고 싶은 작업이 있을 땐 return 값으로 함수를 주자.
+  + = componentWillUnMount() 와 같음
+  + ex) render가 처음 실행되고, 다시 render가 실행될 때 이전에 실행됐던 것들을 정리하고 싶을 때 사용함! 👍
++ **Skipping Effects**
+  + 2번째 인자로 배열[]을 주고, 배열안의 원소들 상태가 바꼈을 때만 첫번째 인자인 콜백 함수를 싱행.
+  + 2번째 인자인 배열 안 원소에 포함되지 않는다면 useEffect의 콜백함수가 실행되지 않는다.
++ **useEffect를 componentDidMount()만 실행되게 하고 싶을 때**
+  + 2번째 인자로 빈 배열을 주면 첫 render시에만 실행되고, state 값이 바뀌어도 실행되지 않는다. component가 사라질 땐 실행됨
 
 
 
