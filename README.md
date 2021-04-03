@@ -125,6 +125,39 @@
   + 2번째 인자로 빈 배열을 주면 첫 render시에만 실행되고, state 값이 바뀌어도 실행되지 않는다. component가 사라질 땐 실행됨
 
 
+  ### `7일차`
+React Router<br>
++ Routing: url에 따라 적당한 콘텐츠를 보여주는 것
+
++ router를 사용하기 위해 설치:
+    + npm react-router-dom 설치
+    + import {BrowserRouter, Route} from 'react-router-dom';
+    + 최상위 태그를 <BrowserRouter>로 감싸주기
+    + url에 따라 달라져야하는 컴포넌트를 <Route>로 감싸주기
+    + Route 태그에 각각에 path를 지정해주자
+      + ex) 사용자가 처음 들어왔을 땐 Home 컴포넌트를 사용자에게 라우팅 해주고 싶다!
+      + 👉🏻 <Route path = '/'>
+      + 🔥 이럴경우 path = '/'와 path = '/topics'가 같이 라우팅 되게 되는데<br>
+      path 앞에 **exact**를 붙이면 정확한 path로만 라우팅됨.
+    + <switch>
+      + 첫번째로 매칭되는 path를 가진 컴포넌트를 렌더링함.
+      + 사용자가 모르는 경로로 들어올 경우 <Route path='/'>Not found</Route>로 하게되면 다른 path에 하나도 포함이 안되기 때문에 Not found가 렌더링되게 됨.
+    + <Link>
+      + 페이지가 리로드 되지 않고 preventDefault와 같은 기능을 함
+    + <NavLink>
+      + <Link>와 유사하지만 링크를 클릭하면 active 클래스가 붙음
+      + 루트에도 active가 기본적으로 붙기 때문에 루트 컴포넌트 Link에 exact 속성을 넣어주기
+    + <BrowserRouter> VS <HashRouter>
+      + 어떤 path로 들어오건 루트페이지에 있는 html 파일을 서비스할 수 있게 코드를 짰다면 <BrowserRouter>
+      + 그게 아니라면 <HashRouter>
+
++ 👾 자동으로 li와 Route가 만들어지게 만들어보자!
+    + 빈 배열에 li 컨텐츠들을 for 루프로 돌면서 푸쉬!
+    + useParams 더 공부하기🥲
+
+
+
+
 
 
 
