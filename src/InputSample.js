@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 function InputSample () {
 	const [inputs, setinputs] = useState({
 		name: '',
 		nickname: '',
 	});
+	const nameInput = useRef(); // nameInput이란 객체 생성
+
 	const { name, nickname } = inputs; // 구조분해할당
 
 	const onChange = (e) => {
@@ -20,7 +22,8 @@ function InputSample () {
 		setinputs({
 			name: '',
 			nickname: '',
-		})
+		});
+		nameInput.current.focus();
 	};
 
 	return (
@@ -30,6 +33,7 @@ function InputSample () {
 				placeholder='이름'
 				onChange={onChange}
 				value={name}
+				ref={nameInput}
 			/>
 			<input 
 				name='nickname' 
