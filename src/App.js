@@ -50,7 +50,14 @@ function App() {
     });
     
     nextId.current += 1;
-  }
+  };
+
+  const onRemove = id => {
+    setUsers(users.filter( user => user.id !== id ))
+    // users의 각 객체들을 가져와 id가 parmeter로 받아온 거랑 다르면 새 배열로 반환!
+  };
+
+  
   
   return (
     <div>
@@ -60,7 +67,7 @@ function App() {
       onChange={onChange} 
       onCreate={onCreate} 
       />
-      <UserList users={users}/>
+      <UserList users={users} onRemove={onRemove}/>
 
     </div>
   );
