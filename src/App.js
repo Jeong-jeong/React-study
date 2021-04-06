@@ -22,17 +22,21 @@ function App() {
 		{
 			id: 1,
 			username: 'velopert',
-			email: 'public.velopert@gmail.com'
+      email: 'public.velopert@gmail.com',
+      active: true,
 		  },
 		  {
 			id: 2,
 			username: 'tester',
-			email: 'tester@example.com'
+      email: 'tester@example.com',
+      active: false,
+      
 		  },
 		  {
 			id: 3,
 			username: 'liz',
-			email: 'liz@example.com'
+      email: 'liz@example.com',
+      active: false,
 		  }
   ]);
   
@@ -57,7 +61,13 @@ function App() {
     // users의 각 객체들을 가져와 id가 parmeter로 받아온 거랑 다르면 새 배열로 반환!
   };
 
-  
+  const onToggle = id => {
+    setUsers(users.map( 
+      user => user.id === id ?
+      { ...user, active: !user.active } :
+       user
+      ));
+  }
   
   return (
     <div>
@@ -67,7 +77,7 @@ function App() {
       onChange={onChange} 
       onCreate={onCreate} 
       />
-      <UserList users={users} onRemove={onRemove}/>
+      <UserList users={users} onRemove={onRemove} onToggle={onToggle}/>
 
     </div>
   );

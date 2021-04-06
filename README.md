@@ -1,70 +1,55 @@
-# Getting Started with Create React App
+# 벨로퍼트 리액트로 기초 다지기
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
 
-In the project directory, you can run:
+ [벨로퍼트 react](https://react.vlpt.us/)
 
-### `yarn start`
+### `8일차` - 2021.04.05(월)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+👾 input 상태 관리하기<br>
++ Input의 값이 바뀌면 <b> 태그 안의 값이 바뀌게 변경해보자!
+	+ **onChange**
+		+ onChange의 event 객체: 이벤트가 발생할 때 내장되어 있음
+		+ event 객체안의 e.target은 이벤트가 발생한 DOM 정보를 갖고 있음.
+		+ e.target.value = 해당 DOM의 값 조회
+		+ useState의 기본 상태 값을 공백으로 하고 input value에 넣어주는게 중요!
+			+ 그래야 초기화 시 기본 상태 값을 불러와 input이 비워지게 됨.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+👾 여러개의 input 관리하기<br>
++ **불변성 지키기**
+	+ 여러 개의 input을 관리하기 위해선 useState인자를 객체로 받아야 함!
+	+ 리액트에서 객체를 업데이트 할 때는 spread 문법(...)을 이용해 기존의 객체를 복사!!
+	+ 새 객체에서 state를 업데이트 해줘야 함.
 
-### `yarn test`
+👾 **useRef**로 특정 DOM 선택하기<br>
++ 버튼을 누르고 focus를 인풋으로 가게하는 리액트 자체 기능이 없다.
+	+ useRef ()로 Ref 객체를 만들고 해당 DOM의 ref 값으로 설정.
+	+ Ref 객체의 current 값은 해당 DOM을 가리키게 됨.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+👾 배열 렌더링하기<br>
++ 여러 개의 객체를 담고 있는 배열을 자동으로 렌더링되게 할 떄는 **map**을 사용
++ key: 각 원소들에 고유값을 줘서 리렌더링 성능 최적화에 도움을 줌
+	+ 고유 key 값을 설정할 게 없다면 map의 두번째 인자인 Index를 키값으로!<br>
+	👉🏻 단 성능적으로 좋아지지 않기 때문에 이 방법은 지양
 
-### `yarn build`
+👾 **useRef**로 컴포넌트 안의 변수 만들기<br>
++ useRef는 특정 DOM 선택에도 사용하지만,<br>
+컴포넌트가 리렌더링 될 때마다 기억될 수 있는 값을 관리할 때도 사용
+	+ ex) setTimeout, setInterval의 id, Scroll의 위치 등등
+	+ useRef() 인자로 기억될 수 있는 값을 넣으면 됨.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### `9일차` - 2021.04.06(화)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+👾 배열에 항목 추가하기<br>
++ 컴포넌트의 상태로 관리해주기 위해선 useState 사용!
++ 배열도 객체와 마찬가지로 기존 배열 복사 후 새 배열에 변화를 줘야 함.
+	+ push, splice, sort 함수는 원 배열을 바꾸기 떄문에 사용 불가.
+	+ spread 문법(...) 이나 concat 사용
 
-### `yarn eject`
+👾 배열에 항목 제거하기<br>
++ 배열에서 특정 아이템을 삭제할 때 불변성을 지켜가며 업데이트 하기!
+	+ filter() 사용 : 배열에서 특정 조건이 만족하면 새 배열로 반환
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+👾 배열에 항목 수정하기<br>
++ 배열의 항목을 수정할 때도 map 함수를 사용!
