@@ -2,6 +2,7 @@ import React from 'react';
 
 // props 가져오기
 function CreateUser ({ username, email, onChange, onCreate  }) {
+	console.log('createUser');
 	// onChange = input 값 바뀔 때 호출
 	// onCreate = 버튼 누르면 새 항목 등록
 	return (
@@ -21,4 +22,4 @@ function CreateUser ({ username, email, onChange, onCreate  }) {
 	);
 }
 
-export default CreateUser;
+export default React.memo(CreateUser); // props가 바뀌었을 때만 리렌더링

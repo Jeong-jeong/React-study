@@ -52,27 +52,27 @@ function App() {
       username,
       email,
     };
-    setUsers(users.concat(user)); // 기존 배열 복사 후 ... 자리에 넣고 새 항목을 추가
+    setUsers(users => users.concat(user)); // 기존 배열 복사 후 ... 자리에 넣고 새 항목을 추가
     setInputs({
       username: '',
       email: ''
     });
     
     nextId.current += 1;
-  }, [username, email, users]);
+  }, [username, email]);
 
   const onRemove = useCallback(id => {
-    setUsers(users.filter( user => user.id !== id ))
+    setUsers(users => users.filter( user => user.id !== id ))
     // users의 각 객체들을 가져와 id가 parmeter로 받아온 거랑 다르면 새 배열로 반환!
-  }, [users]);
+  }, []);
 
   const onToggle = useCallback(id => {
-    setUsers(users.map( 
+    setUsers(users => users.map( 
       user => user.id === id ?
       { ...user, active: !user.active } :
        user
       ));
-  }, [users]);
+  }, []);
   const count = useMemo(() => countActiveUsers(users), [users]);
   
   return (

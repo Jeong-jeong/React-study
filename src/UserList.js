@@ -1,13 +1,10 @@
 import React, {useEffect} from 'react';
 
-function User ( {user, onRemove, onToggle } ) {
+const User = function User ( {user, onRemove, onToggle } ) {
 	const {username, email, id, active} = user;
 	useEffect(() => {
-		console.log('컴포넌트가 화면에 나타남');
-		return () => {
-			console.log('컴포넌트가 화면에서 사라짐');
-		}
-	}, []);
+		console.log(user);
+	}, [user]);
 	return (
 		<div>
 			<b style={{
@@ -40,4 +37,5 @@ function UserList({ users, onRemove, onToggle }) {
 	);
 }
 
-export default UserList;
+export default React.memo(UserList, (pre, next) => pre === next); // props가 바뀌었을 때만 리렌더링
+// React.memo의 두번째 인수로 propsAreEqual 함수를 넣어줄 수 있음.
