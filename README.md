@@ -72,3 +72,32 @@
 + ⭐️ useEffect 사용시 props로 받아온 값, useState 값을 참조할 떄, 함수를 사용할 때<br>
 deps에 꼭 넣어줘야 함. => 오류 가능성 줄여줌
 + ⭐️ React에선 부모 컴포넌트가 리렌더링되면 자식 컴포넌트도 리렌더링됨!!
+
+
+### `11일차` - 2021.06.04(금)
+👾 useMemo
++ 이전에 연산된 값을 재사용할 때 사용.
++ 특정 값이 바뀌었을 때만 특정 함수를 실행해서 연산 처리.
+	+ 만약 값이 바뀌지 않았다면 리렌더링될 때 이전의 연산된 값을 재사용하게 해줌.
++ <code>useMemo(해당함수, deps)</code>
+
+👾 useCallback
++ 이전에 만들었던 함수를 새로 만들지 않고 재사용할 떄 사용.
++ useMemo랑 비슷하지만 '함수'를 위한 hook.
++ ⭐️ 리렌더링 될 때마다 함수가 새로 만들어지는 것을 막는 것이 좋음.
+	+ 최적화하고 싶은 함수를 useCallback으로 감싸준다.
+		+ <code>useCallback(해당함수, deps)</code>
+
+👾 React.memo
++ 컴포넌트에서 리렌더링이 불필요할 때 이전 렌더링 결과를 재사용.
++ 컴포넌트 리렌더링 성능 최적화 효과!
++ 컴포넌트를 export default 할 때 React.memo로 감싸주기
++ 두번째 인수로 propsAreEqual 함수를 넣어줄 수 있음.
+	+ preProps, nextProps를 가져와서 비교 후 true이면 리렌더링 방지, 아니면 리렌더링.
+	+ ex) <code>React.memo(컴포넌트, (pre, next) => pre === next)</code> 이면 리렌더링 방지.
+
+⭐️ 오늘 배운 최적화 hooks 들은 최적화가 필요하다고 판단될 때에만 사용하기!
+
+
+
+
