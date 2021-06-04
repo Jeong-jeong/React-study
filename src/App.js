@@ -1,4 +1,4 @@
-import React, {useRef ,useState, useMemo} from 'react';
+import React, {useRef ,useState, useMemo, useCallback} from 'react';
 import CreateUser from './CreateUser';
 import UserList from './UserList';
 
@@ -14,13 +14,13 @@ function App() {
     email: '',
   });
   const { username, email } = inputs; // inputs에서 username과 email 추출
-  const onChange = e => {
+  const onChange = useCallback(e => {
     const { name, value } = e.target; // e.target에서 name과 value 추출
     setInputs({
       ...inputs, // 기존의 내용 복사
       [name] : value // name 값을 value로 덮어씌움
     });
-  };
+  }, [inputs]);
 
   const [users, setUsers] = useState([ // users 배열을 상태관리해주기 위해서
     // useState로 감싼 뒤 비구조화할당으로 추출
@@ -46,7 +46,7 @@ function App() {
   ]);
   
   const nextId = useRef(4);
-  const onCreate = () => { // 버튼 클릭 시 onCreate 함수 호출
+  const onCreate = useCallback(() => { // 버튼 클릭 시 onCreate 함수 호출
     const user = { // 새 user 객체 생성
       id: nextId.current,
       username,
@@ -59,21 +59,20 @@ function App() {
     });
     
     nextId.current += 1;
-  };
+  }, [username, email, users]);
 
-  const onRemove = id => {
+  const onRemove = useCallback(id => {
     setUsers(users.filter( user => user.id !== id ))
     // users의 각 객체들을 가져와 id가 parmeter로 받아온 거랑 다르면 새 배열로 반환!
-  };
+  }, [users]);
 
-  const onToggle = id => {
+  const onToggle = useCallback(id => {
     setUsers(users.map( 
       user => user.id === id ?
       { ...user, active: !user.active } :
        user
       ));
-  }
-
+  }, [users]);
   const count = useMemo(() => countActiveUsers(users), [users]);
   
   return (
