@@ -99,5 +99,20 @@ deps에 꼭 넣어줘야 함. => 오류 가능성 줄여줌
 ⭐️ 오늘 배운 최적화 hooks 들은 최적화가 필요하다고 판단될 때에만 사용하기!
 
 
+### `12일차` - 2021.06.05(토)
+👾 useReducer
++ 상태 업데이트.
++ useState와의 차이점
+	+ ⭐️action⭐️이란 객체를 기반으로 상태를 업데이트.
+	+ 상태 업데이트 로직을 컴포넌트 밖으로 분리 가능.
+	+ 다른 파일에 작성 후 불러와서 사용도 가능.
++ <code>reducer</code>: 상태를 업데이트하는 함수
++ <code>dispatch</code>: action을 발생시킴.
+
+👾 useState VS useReducer
++ 간단한 거면 useState, 복잡한거면 useReducer
+
+
+
 
 
