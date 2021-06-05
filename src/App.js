@@ -1,4 +1,4 @@
-import React, {useRef ,useState, useMemo, useCallback} from 'react';
+import React, {useRef ,useReducer, useMemo, useCallback} from 'react';
 import CreateUser from './CreateUser';
 import UserList from './UserList';
 
@@ -7,22 +7,13 @@ function countActiveUsers(users) {
   return users.filter(user => user.active).length;
 }
 
-function App() {
-  const [inputs, setInputs] = useState({
+const initialState = {
+  inputs: {
     // useState에서 사용할 상태 설정
     username: '',
     email: '',
-  });
-  const { username, email } = inputs; // inputs에서 username과 email 추출
-  const onChange = useCallback(e => {
-    const { name, value } = e.target; // e.target에서 name과 value 추출
-    setInputs({
-      ...inputs, // 기존의 내용 복사
-      [name] : value // name 값을 value로 덮어씌움
-    });
-  }, [inputs]);
-
-  const [users, setUsers] = useState([ // users 배열을 상태관리해주기 위해서
+  },
+  users: [ // users 배열을 상태관리해주기 위해서
     // useState로 감싼 뒤 비구조화할당으로 추출
 		{
 			id: 1,
@@ -43,47 +34,102 @@ function App() {
       email: 'liz@example.com',
       active: false,
 		  }
-  ]);
-  
+  ]
+}
+
+function reducer (state, action) {
+  switch (action.type) {
+    case 'CHANGE_INPUT':
+      return {
+        ...state,
+        input: {
+          ...state.inputs,
+          [action.name] : action.value
+        }
+      };
+    case 'CREATE_USER':
+      return {
+        inputs: initialState.inputs,
+        users: state.users.concat(action.user)
+      }
+    case 'TOGGLE_USER':
+      return {
+        ...state,
+        users: state.users.map(user => 
+          user.id === action.id
+          ? { ...user, active: !user.active }
+          : user
+        )
+      };
+    case 'REMOVE_USER':
+      return {
+        ...state,
+        users: state.users.filter(user => user.id !== action.id)
+      }
+      default:
+        throw new Error('Unhandled action');
+  }
+}
+
+function App() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  // state안에 inputs, users가 들어있음.
+  // state 안의 값들을 비구조화 할당으로 추출후 컴포넌트에게 props로 할당.
+  const { username, email } = state.inputs;
+  const { users } = state;
   const nextId = useRef(4);
-  const onCreate = useCallback(() => { // 버튼 클릭 시 onCreate 함수 호출
-    const user = { // 새 user 객체 생성
-      id: nextId.current,
-      username,
-      email,
-    };
-    setUsers(users => users.concat(user)); // 기존 배열 복사 후 ... 자리에 넣고 새 항목을 추가
-    setInputs({
-      username: '',
-      email: ''
-    });
-    
+
+  // onChange 구현
+  const onChange = useCallback( e => {
+    const { name, value } = e.target;
+    dispatch({
+      type: 'CHANGE_INPUT',
+      name,
+      value
+    })
+  }, [])
+
+  // onCreate 구현
+  const onCreate = useCallback(() => {
+    dispatch({
+      type: 'CREATE_USER',
+      user: {
+        id: nextId.current,
+        username,
+        email,
+      }
+    })
     nextId.current += 1;
-  }, [username, email]);
+  }, [username, email])
 
-  const onRemove = useCallback(id => {
-    setUsers(users => users.filter( user => user.id !== id ))
-    // users의 각 객체들을 가져와 id가 parmeter로 받아온 거랑 다르면 새 배열로 반환!
-  }, []);
-
+  // onToggle 구현
   const onToggle = useCallback(id => {
-    setUsers(users => users.map( 
-      user => user.id === id ?
-      { ...user, active: !user.active } :
-       user
-      ));
+    dispatch({
+      type: 'TOGGLE_USER',
+      id
+    });
   }, []);
-  const count = useMemo(() => countActiveUsers(users), [users]);
+
+  // onRemove 구현
+  const onRemove = useCallback(id => {
+    dispatch({
+      type: 'REMOVE_USER',
+      id
+    })
+  }, [])
+
+  // active user
+  const count = useMemo(() => countActiveUsers(users), [users])
   
   return (
     <div>
-      <CreateUser
-      username={username} 
-      email={email} 
-      onChange={onChange} 
-      onCreate={onCreate} 
+      <CreateUser 
+        username={username} 
+        email={email} 
+        onChange={onChange}
+        onCreate={onCreate}
       />
-      <UserList users={users} onRemove={onRemove} onToggle={onToggle}/>
+      <UserList users={users} onToggle={onToggle} onRemove={onRemove}/>
       <div>활성 사용자 수: {count}</div>
     </div>
   );

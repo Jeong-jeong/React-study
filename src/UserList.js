@@ -3,7 +3,6 @@ import React, {useEffect} from 'react';
 const User = function User ( {user, onRemove, onToggle } ) {
 	const {username, email, id, active} = user;
 	useEffect(() => {
-		console.log(user);
 	}, [user]);
 	return (
 		<div>
