@@ -112,6 +112,21 @@ deps에 꼭 넣어줘야 함. => 오류 가능성 줄여줌
 👾 useState VS useReducer
 + 간단한 거면 useState, 복잡한거면 useReducer
 
+🌈 React component styling
+
+
+### `13일차` - 2021.06.06(일)
+👾 custom Hook
++ 반복되는 것들은 custom hook으로 만들기.
++ use로 시작되는 함수
+
+👾 Context API
++ 여러 컴포넌트를 거쳐 함수를 전달할 일이 있을 때 사용.
++ <code>dispatch</code>를 Context API로 전역적으로 사용하게 해 코드 구조를 깔끔히 할 수 있음.
+	+ <code>createContext(기본값)</code>: Context 생성
+	+ <code>useContext(기본값)</code>: Context 값을 조회해 사용하게 해줌.
+	+ <code>.Provider</code>: 기본값 변경(value 속성 사용)
+
 
 
 
