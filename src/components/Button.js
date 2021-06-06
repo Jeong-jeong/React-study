@@ -1,10 +1,18 @@
 import React from 'react'
+import classNames from 'classnames';
 import './Button.scss';
 
-export default function Button({children}) {
+// size:  large, medium, small
+// color: blue, pink, gray
+function Button({children, size, color}) {
 	return (
-		<div>
-			<button className='button'>{children}</button>
-		</div>
+			<button className={classNames('button', size, color)}>{children}</button>
 	)
 }
+
+Button.defaultProps = {
+	size: 'medium',
+	color: 'blue'
+};
+
+export default Button;

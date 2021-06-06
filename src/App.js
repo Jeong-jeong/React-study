@@ -98,8 +98,11 @@ function App() {
   
   return (
     <div>
-      <div className='buttons'>
+      {/* scss 스타일링 */}
+      <div className='buttons'> 
+        <Button size='large' color='gray'>버튼</Button>
         <Button>버튼</Button>
+        <Button color='pink'>버튼</Button>
       </div>
 
       <userDispatch.Provider value={dispatch}>
