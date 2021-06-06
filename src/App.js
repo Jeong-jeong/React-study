@@ -1,4 +1,4 @@
-import React, {useRef ,useReducer, useMemo, useCallback} from 'react';
+import React, {useRef ,useReducer, useMemo, useCallback, createContext} from 'react';
 import Button from './components/Button';
 import CreateUser from './CreateUser';
 import UserList from './UserList';
@@ -62,6 +62,8 @@ function reducer (state, action) {
   }
 }
 
+export const userDispatch = createContext(null); // 기본값 필요 없음
+
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   // state안에 inputs, users가 들어있음.
@@ -90,21 +92,6 @@ function App() {
     nextId.current += 1;
   }, [username, email, reset])
 
-  // onToggle 구현
-  const onToggle = useCallback(id => {
-    dispatch({
-      type: 'TOGGLE_USER',
-      id
-    });
-  }, []);
-
-  // onRemove 구현
-  const onRemove = useCallback(id => {
-    dispatch({
-      type: 'REMOVE_USER',
-      id
-    })
-  }, [])
 
   // active user
   const count = useMemo(() => countActiveUsers(users), [users])
@@ -114,14 +101,17 @@ function App() {
       <div className='buttons'>
         <Button>버튼</Button>
       </div>
-      <CreateUser 
-        username={username} 
-        email={email} 
-        onChange={onChange}
-        onCreate={onCreate}
-      />
-      <UserList users={users} onToggle={onToggle} onRemove={onRemove}/>
-      <div>활성 사용자 수: {count}</div>
+
+      <userDispatch.Provider value={dispatch}>
+        <CreateUser 
+          username={username} 
+          email={email} 
+          onChange={onChange}
+          onCreate={onCreate}
+        />
+        <UserList users={users} />
+        <div>활성 사용자 수: {count}</div>
+      </userDispatch.Provider>
     </div>
   );
 }

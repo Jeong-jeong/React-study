@@ -1,7 +1,8 @@
-import React, {useEffect} from 'react';
-
-const User = function User ( {user, onRemove, onToggle } ) {
+import React, {useContext, useEffect} from 'react';
+import { userDispatch } from './App';
+const User = function User ( { user } ) {
 	const {username, email, id, active} = user;
+	const dispatch = useContext(userDispatch);
 	useEffect(() => {
 	}, [user]);
 	return (
@@ -10,17 +11,23 @@ const User = function User ( {user, onRemove, onToggle } ) {
 				color: active ? 'green' : 'black',
 				cursor: 'pointer'
 			}}
-				onClick={ () => onToggle(id) }
+				onClick={ () => dispatch({ 
+					type: 'TOGGLE_USER',
+					id
+				})}
 			>
 				{username}
 			</b> 
 			<span>({email})</span>
-			<button onClick={ ()=> onRemove(id) }>삭제</button>
+			<button onClick={ ()=> dispatch({
+				type: 'REMOVE_USER',
+				id
+			})}>삭제</button>
 		</div>
 	);
 }
 
-function UserList({ users, onRemove, onToggle }) {
+function UserList({ users }) { // 다리 역할
 
 	return (
 		<>
@@ -28,8 +35,6 @@ function UserList({ users, onRemove, onToggle }) {
 			<User 
 				user={item} 
 				key={item.id} 
-				onRemove={onRemove}
-				onToggle={onToggle}
 			/>
 		))}
 		</>
