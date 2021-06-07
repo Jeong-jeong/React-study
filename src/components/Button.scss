@@ -1,4 +1,4 @@
-// scss-lint:disable-all
+// scss-lint:disable all
 
 $blue: #228be6; // 주석!
 $pink: #ffdeeb;
@@ -11,6 +11,16 @@ $gray: #ced4da;
 		}
 		&:active {
 			background: darken($color, 10%);
+		}
+
+		&.outline { // outline
+			color: $color;
+			background: none;
+			border: 1px solid $color;
+			&:hover {
+				background: $color;;
+				color: #fff;
+			}
 		}
 	}
 
@@ -25,11 +35,6 @@ $gray: #ced4da;
   border: none;
 	border-radius: 4px;
 	padding: 0 1rem;
-	
-
-	& + & {
-		margin-left: 1rem;
-	}
 
 	// size
 	&.large {
@@ -58,5 +63,17 @@ $gray: #ced4da;
 		@include button-color($pink)
 	}
 
+	& + & {
+		margin-left: 1rem;
+	}
+
+	&.fullWidth {
+		width: 100%;
+		justify-content: center;
+		margin-left: 0;
+		& + & {
+			margin-top: 1rem;
+		}
+	}
 	
 }

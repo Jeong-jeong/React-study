@@ -107,7 +107,11 @@ function App() {
       <div className='buttons'> 
         <Button size='large' color='gray'>버튼</Button>
         <Button>버튼</Button>
-        <Button color='pink'>버튼</Button>
+        <Button size='small'color='pink'>버튼</Button>
+        <Button size='large' outline>버튼</Button>
+        <Button color={'gray'} outline>버튼</Button>
+        <Button size='small'color='pink' outline fullWidth>버튼</Button>
+        <Button size='small'color='blue' outline fullWidth>버튼</Button>
       </div>
 
       <userDispatch.Provider value={dispatch}>
