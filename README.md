@@ -128,6 +128,16 @@ deps에 꼭 넣어줘야 함. => 오류 가능성 줄여줌
 	+ <code>.Provider</code>: 기본값 변경(value 속성 사용)
 
 
-
+### `14일차` - 2021.06.07(월)
+👾 Immer
++ 불변성을 해치는 코드를 작성해도, 불변성을 지키게 바꿔서 반환해줌!
++ <code>import produce from 'immer'</code> : 보통 produce라고 부름.
++ <code>produce(바꿀 값, draft => { 바꿀 내용 })</code>
++ produce의 첫번째 인자를 넣지 않으면, updater 함수가 됨.
++ 함수형 업데이트와 immer
+	+ 함수형 업데이트의 장점은 useCallback 등을 사용할 때 deps에 아무것도 넣어줄 필요가 없었음.
+		+ 함수형 업데이트에서 이미 최신값을 참조하고 있기 때문에.
+		+ useState 값 변경 함수에 안에 업데이터 함수를 넣어주면 deps를 비워도 OK!
+	
 
 
