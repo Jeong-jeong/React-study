@@ -1,4 +1,5 @@
 import React, {useRef ,useReducer, useMemo, useCallback, createContext} from 'react';
+import produce from 'immer';
 import Button from './components/Button';
 import CreateUser from './CreateUser';
 import UserList from './UserList';
@@ -39,26 +40,30 @@ function reducer (state, action) {
   switch (action.type) {
   
     case 'CREATE_USER':
-      return {
-        inputs: initialState.inputs,
-        users: state.users.concat(action.user)
-      }
+      return produce(state, draft => { // immer를 쓴 경우
+        draft.users.push(action.user)
+      })
+      //return {
+      //  users: state.users.concat(action.user)
+      //}
     case 'TOGGLE_USER':
-      return {
-        ...state,
-        users: state.users.map(user => 
-          user.id === action.id
-          ? { ...user, active: !user.active }
-          : user
-        )
-      };
+      return produce(state, draft => { // 이런 경우 코드가 복잡하기 때문에 immer로 간단히 바꿔줌.
+        const user = draft.users.find( user => user.id === action.id)// 특정 유저 찾기 (user의 id가 action으로 가져온 id랑 같은)
+        user.active = !user.active;
+        //users: state.users.map(user => 
+        //  user.id === action.id
+        //  ? { ...user, active: !user.active }
+        //  : user
+      });
     case 'REMOVE_USER':
-      return {
-        ...state,
-        users: state.users.filter(user => user.id !== action.id)
-      }
-      default:
-        throw new Error('Unhandled action');
+      return produce(state, draft => {
+        const index = draft.users.findIndex(user => user.id === action.id);
+        draft.users.splice(index, 1);
+        //...state,
+        //users: state.users.filter(user => user.id !== action.id)
+      })
+    default:
+      throw new Error('Unhandled action');
   }
 }
 
@@ -68,7 +73,7 @@ function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   // state안에 inputs, users가 들어있음.
   // state 안의 값들을 비구조화 할당으로 추출후 컴포넌트에게 props로 할당.
-  const  [form, onChange, reset] = useInputs({
+  const  [form, onChange] = useInputs({
     username: '',
     email: '',
   });
@@ -90,7 +95,7 @@ function App() {
       }
     })
     nextId.current += 1;
-  }, [username, email, reset])
+  }, [username, email])
 
 
   // active user
