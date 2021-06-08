@@ -1,0 +1,6 @@
+{
+  "trailingComma": "all", // 객체, 배열 만들 때 각 엘리먼트 뒤에 쉼표!
+  "tabWidth": 2,
+  "semi": true,
+  "singleQuote": true
+}
